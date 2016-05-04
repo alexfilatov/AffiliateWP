@@ -30,8 +30,6 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 			'last_name' => self::$last_name
 		) );
 
-		$affiliate_ids = array();
-
 		for ( $i = 0; $i <= 2; $i++ ) {
 			$affiliate_id = affiliate_wp()->affiliates->add( array(
 				'user_id' => self::$users[ $i ]
