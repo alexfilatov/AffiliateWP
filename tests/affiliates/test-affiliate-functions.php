@@ -7,7 +7,7 @@
  */
 class Affiliate_Functions_Tests extends WP_UnitTestCase {
 
-	public static $users = array();
+	public static $user_ids = array();
 
 	public static $affiliates = array();
 
@@ -17,22 +17,22 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 
 	public static function wpSetUpBeforeClass( $factory ) {
 
-		self::$users[] = $factory->user->create( array(
+		self::$user_ids[] = $factory->user->create( array(
 			'first_name' => self::$first_name = rand_str( 5 ),
 			'last_name'  => self::$last_name = rand_str( 8 ),
 		) );
 
-		self::$users[] = $factory->user->create( array(
+		self::$user_ids[] = $factory->user->create( array(
 			'first_name' => self::$first_name
 		) );
 
-		self::$users[] = $factory->user->create( array(
+		self::$user_ids[] = $factory->user->create( array(
 			'last_name' => self::$last_name
 		) );
 
 		for ( $i = 0; $i <= 2; $i++ ) {
 			$affiliate_id = affiliate_wp()->affiliates->add( array(
-				'user_id' => self::$users[ $i ]
+				'user_id' => self::$user_ids[ $i ]
 			) );
 
 			self::$affiliates[] = affwp_get_affiliate( $affiliate_id );
@@ -44,7 +44,7 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 			affwp_delete_affiliate( $affiliate );
 		}
 
-		foreach ( self::$users as $user_id ) {
+		foreach ( self::$user_ids as $user_id ) {
 			wp_delete_user( $user_id );
 		}
 	}
@@ -79,7 +79,7 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 	 * @covers affwp_is_affiliate()
 	 */
 	public function test_is_affiliate_with_real_user_should_return_true() {
-		$this->assertTrue( affwp_is_affiliate( self::$users[0] ) );
+		$this->assertTrue( affwp_is_affiliate( self::$user_ids[0] ) );
 	}
 
 	/**
@@ -93,7 +93,7 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 	 * @covers affwp_get_affiliate_id()
 	 */
 	public function test_get_affiliate_id_with_real_user_should_return_a_real_affiliate_id() {
-		$this->assertEquals( self::$affiliates[0]->affiliate_id, affwp_get_affiliate_id( self::$users[0] ) );
+		$this->assertEquals( self::$affiliates[0]->affiliate_id, affwp_get_affiliate_id( self::$user_ids[0] ) );
 	}
 
 	/**
@@ -107,7 +107,7 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 	 * @covers affwp_get_affiliate_username()
 	 */
 	public function test_get_affiliate_username_with_valid_user_should_return_username() {
-		$user = get_user_by( 'id', self::$users[0] );
+		$user = get_user_by( 'id', self::$user_ids[0] );
 
 		$this->assertEquals( $user->data->user_login, affwp_get_affiliate_username( self::$affiliates[0]->affiliate_id ) );
 	}
@@ -174,7 +174,7 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 	 * @covers affwp_get_affiliate_user_id()
 	 */
 	public function test_get_affiliate_user_id_with_valid_affiliate_id_should_return_valid_user_id() {
-		$this->assertEquals( self::$users[0], affwp_get_affiliate_user_id( self::$affiliates[0]->affiliate_id ) );
+		$this->assertEquals( self::$user_ids[0], affwp_get_affiliate_user_id( self::$affiliates[0]->affiliate_id ) );
 	}
 
 	/**
@@ -188,7 +188,7 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 	 * @covers affwp_get_affiliate_user_id()
 	 */
 	public function test_get_affiliate_user_id_with_valid_affiliate_object_should_return_valid_user_id() {
-		$this->assertEquals( self::$users[0], affwp_get_affiliate_user_id( self::$affiliates[0] ) );
+		$this->assertEquals( self::$user_ids[0], affwp_get_affiliate_user_id( self::$affiliates[0] ) );
 	}
 
 	/**
@@ -1187,7 +1187,7 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 	 * @covers affwp_add_affiliate()
 	 */
 	public function test_add_affiliate_for_user_already_an_affiliate_should_return_false() {
-		$this->assertFalse( affwp_add_affiliate( self::$users[0] ) );
+		$this->assertFalse( affwp_add_affiliate( self::$user_ids[0] ) );
 	}
 
 	/**
