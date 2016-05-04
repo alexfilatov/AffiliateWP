@@ -116,7 +116,7 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 	 * @covers affwp_get_affiliate_name()
 	 */
 	public function test_affwp_get_affiliate_name_should_equal_empty_string() {
-		$this->assertEquals( '', affwp_get_affiliate_name() );
+		$this->assertEmpty( affwp_get_affiliate_name() );
 	}
 
 	/**
