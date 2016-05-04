@@ -17,26 +17,31 @@ class Affiliate_Functions_Tests extends WP_UnitTestCase {
 
 	public static function wpSetUpBeforeClass( $factory ) {
 
-		self::$user_ids[] = $factory->user->create( array(
+		// Users.
+		$user1 = $factory->user->create( array(
 			'first_name' => self::$first_name = rand_str( 5 ),
 			'last_name'  => self::$last_name = rand_str( 8 ),
 		) );
 
-		self::$user_ids[] = $factory->user->create( array(
+		$user2 = $factory->user->create( array(
 			'first_name' => self::$first_name
 		) );
 
-		self::$user_ids[] = $factory->user->create( array(
+		$user3 = $factory->user->create( array(
 			'last_name' => self::$last_name
 		) );
 
-		for ( $i = 0; $i <= 2; $i++ ) {
-			$affiliate_id = affiliate_wp()->affiliates->add( array(
-				'user_id' => self::$user_ids[ $i ]
-			) );
+		self::$user_ids = array( $user1, $user2, $user3 );
 
-			self::$affiliates[] = affwp_get_affiliate( $affiliate_id );
+		// Affiliates.
+		$affiliate_ids = array();
+
+		foreach ( self::$user_ids as $user_id ) {
+			$affiliate_ids[] = affiliate_wp()->affiliates->add( array(
+				'user_id' => $user_id
+			) );
 		}
+		self::$affiliates = array_map( 'affwp_get_affiliate', $affiliate_ids );
 	}
 
 	public static function wpTearDownAfterClass() {
