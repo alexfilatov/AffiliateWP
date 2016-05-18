@@ -27,7 +27,7 @@ class Affiliate_WP_MemberPress extends Affiliate_WP_Base {
 		add_action( 'save_post', array( $this, 'save_meta' ) );
 
 		// Coupon support
-		add_action( 'add_mSeta_boxes', array( $this, 'add_coupon_meta_box' ) );
+		add_action( 'add_meta_boxes', array( $this, 'add_coupon_meta_box' ) );
 		add_action( 'save_post', array( $this, 'store_discount_affiliate' ), 1, 2 );
 	}
 
