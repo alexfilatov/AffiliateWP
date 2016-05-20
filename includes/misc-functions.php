@@ -68,6 +68,7 @@ function affwp_get_currencies() {
 		'THB' => __( 'Thai Baht', 'affiliate-wp' ),
 		'TRY' => __( 'Turkish Lira', 'affiliate-wp' ),
 		'AED' => __( 'United Arab Emirates Dirham', 'affiliate-wp' ),
+		'UAH' => __( 'Ukrainian Hryvnia', 'affiliate-wp' ),
 		'VND' => __( 'Vietnamese Dong', 'affiliate-wp' ),
 	);
 
@@ -216,6 +217,9 @@ function affwp_currency_filter( $amount ) {
 			case 'RON' :
 				$formatted = 'lei' . $amount;
 				break;
+			case 'UAH' :
+				$formatted = '₴' . $amount;
+				break;
 			case "JPY" :
 				$formatted = '&yen;' . $amount;
 				break;
@@ -248,6 +252,9 @@ function affwp_currency_filter( $amount ) {
 				break;
 			case 'RON' :
 				$formatted = $amount . 'lei';
+				break;
+			case 'UAH' :
+				$formatted = $amount . '₴';
 				break;
 			case "JPY" :
 				$formatted = $amount . '&yen;';
