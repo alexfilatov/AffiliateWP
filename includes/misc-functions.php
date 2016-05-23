@@ -218,7 +218,7 @@ function affwp_currency_filter( $amount ) {
 				$formatted = 'lei' . $amount;
 				break;
 			case 'UAH' :
-				$formatted = '₴' . $amount;
+				$formatted = '&#8372;' . $amount;
 				break;
 			case "JPY" :
 				$formatted = '&yen;' . $amount;
@@ -254,7 +254,7 @@ function affwp_currency_filter( $amount ) {
 				$formatted = $amount . 'lei';
 				break;
 			case 'UAH' :
-				$formatted = $amount . '₴';
+				$formatted = $amount . '&#8372;';
 				break;
 			case "JPY" :
 				$formatted = $amount . '&yen;';
